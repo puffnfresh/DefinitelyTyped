@@ -1,4 +1,4 @@
-// Type definitions for react-svg-pan-zoom 2.5
+// Type definitions for react-svg-pan-zoom 3.2.0
 // Project: https://github.com/chrvadala/react-svg-pan-zoom#readme, https://chrvadala.github.io/react-svg-pan-zoom
 // Definitions by: Huy Nguyen <https://github.com/huy-nguyen>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
@@ -57,9 +57,6 @@ export interface OptionalProps {
 	// background of the svg
 	SVGBackground: string;
 
-	// value of the viewer (current point of view)
-	value: Value | null;
-
 	// CSS style of the Viewer
 	style: object;
 
@@ -74,12 +71,6 @@ export interface OptionalProps {
 
 	// toolbar position
 	toolbarPosition: ToolbarPosition;
-
-	// handler something changed
-	onChangeValue(value: Value): void;
-
-	// handler tool changed
-	onChangeTool(tool: Tool): void;
 
 	// Note: The `T` type parameter is the type of the `target` of the event:
 	// handler click
@@ -103,9 +94,6 @@ export interface OptionalProps {
 	// how much scale in or out
 	scaleFactor: number;
 
-	// current active tool (TOOL_NONE, TOOL_PAN, TOOL_ZOOM_IN, TOOL_ZOOM_OUT)
-	tool: Tool;
-
 	// modifier keys //https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState
 	modifierKeys: string[];
 
@@ -116,7 +104,7 @@ export interface OptionalProps {
 	// How about touch events? They are in README but not in `propTypes`.
 }
 
-export interface RequiredProps {
+export interface UncontrolledProps {
 	// width of the viewer displayed on screen
 	width: number;
 	// height of the viewer displayed on screen
@@ -128,7 +116,24 @@ export interface RequiredProps {
 	// children: () => any;
 }
 
+export interface RequiredProps extends UncontrolledProps {
+	// value of the viewer (current point of view)
+	value: Value | null;
+    
+	// current active tool (TOOL_NONE, TOOL_PAN, TOOL_ZOOM_IN, TOOL_ZOOM_OUT)
+	tool: Tool;
+
+	// handler something changed
+	onChangeValue(value: Value): void;
+
+	// handler tool changed
+	onChangeTool(tool: Tool): void;
+}
+
 export type Props = RequiredProps & Partial<OptionalProps>;
+
+export class UncontrolledReactSVGPanZoom extends React.Component<UncontrolledProps> {
+}
 
 export class ReactSVGPanZoom extends React.Component<Props> {
 	pan(SVGDeltaX: number, SVGDeltaY: number): void;
